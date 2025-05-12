@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | cody-lee.org</title>
+    <title>About Tasky - Chrome Extension for Task & Time Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Basic Reset */
+        /* --- Basic Reset & Body Styles --- */
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
@@ -14,229 +17,539 @@
 
         html {
             scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; /* San Francisco */
-            background-color: #ffffff; /* White background */
-            color: #000000; /* Black text */
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* bg-gray-900 */
+            color: #d1d5db; /* text-gray-300 default */
             line-height: 1.6;
-            min-height: 100vh; /* Ensure full viewport height */
-            display: flex;
-            flex-direction: column; /* Stack content vertically */
+            overflow-x: hidden;
         }
 
-        /* Utility Classes */
+        /* --- Utility Classes (Simplified) --- */
         .container {
-            max-width: min(600px, 90%); /* Responsive max-width with percentage fallback */
-            margin: 0 auto;
-            padding: 0 1rem;
+            max-width: 64rem; /* max-w-6xl */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;  /* px-4 */
+            padding-right: 1rem; /* px-4 */
         }
+        @media (min-width: 640px) { .container { padding-left: 1.5rem; padding-right: 1.5rem; } }
+        @media (min-width: 1024px) { .container { padding-left: 2rem; padding-right: 2rem; } }
 
         .text-center { text-align: center; }
-        .text-left { text-align: left; }
-        .uppercase { text-transform: uppercase; }
-        .mb-1 { margin-bottom: 0.25rem; }
-        .mb-2 { margin-bottom: 0.5rem; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
         .mb-4 { margin-bottom: 1rem; }
         .mb-8 { margin-bottom: 2rem; }
+        .mb-16 { margin-bottom: 4rem; }
+        .mt-2 { margin-top: 0.5rem; }
         .mt-4 { margin-top: 1rem; }
+        .mt-6 { margin-top: 1.5rem; }
         .mt-8 { margin-top: 2rem; }
-        .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+        .mt-10 { margin-top: 2.5rem; }
+        .mr-2 { margin-right: 0.5rem; }
+        .ml-3 { margin-left: 0.75rem; }
         .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
-        .py-025 { padding-top: 0.25rem; padding-bottom: 0.25rem; } /* Reduced padding for nav bar */
+        .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+        .pt-20 { padding-top: 5rem; }
+        .pb-24 { padding-bottom: 6rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .px-8 { padding-left: 2rem; padding-right: 2rem; }
+        .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .rounded-md { border-radius: 0.375rem; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .rounded-xl { border-radius: 0.75rem; }
+        .sticky { position: sticky; }
+        .top-0 { top: 0; }
+        .z-50 { z-index: 50; }
+        .overflow-hidden { overflow: hidden; }
+        .block { display: block; }
+        .inline-block { display: inline-block; }
+        .inline-flex { display: inline-flex; }
         .flex { display: flex; }
+        .flex-wrap { flex-wrap: wrap; }
         .items-center { align-items: center; }
+        .items-baseline { align-items: baseline; }
+        .justify-between { justify-content: space-between; }
         .justify-center { justify-content: center; }
-        .gap-2 { gap: 0.5rem; }
-        .gap-4 { gap: 1rem; }
+        .flex-shrink-0 { flex-shrink: 0; }
+        .space-x-4 > * + * { margin-left: 1rem; }
+        .space-y-4 > * + * { margin-top: 1rem; }
+        .relative { position: relative; }
+        .uppercase { text-transform: uppercase; }
+        .tracking-wide { letter-spacing: 0.05em; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+        .font-extrabold { font-weight: 800; }
+        .text-sm { font-size: 0.875rem; }
+        .text-base { font-size: 1rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .text-3xl { font-size: 1.875rem; }
+        .text-4xl { font-size: 2.25rem; }
+        .leading-tight { line-height: 1.25; }
+        .max-w-2xl { max-width: 42rem; }
+        .max-w-3xl { max-width: 48rem; }
+        .max-w-4xl { max-width: 56rem; }
+        .max-w-6xl { max-width: 72rem; }
+        .transition { transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
 
-        /* Header */
+        /* --- Header --- */
         .header {
-            padding: 1rem 0 0.5rem 0; /* Reduced top padding from 2rem to 1rem, bottom from 1rem to 0.5rem */
+            background-color: #1f2937; /* bg-gray-800 */
         }
-
-        .header-content {
+        .header .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 4rem; /* h-16 */
+            flex-wrap: wrap; /* Allow wrapping */
+        }
+        .header .logo-container {
+            display: flex;
+            align-items: baseline;
+            flex-shrink: 0;
+            margin-right: 1rem; /* mr-4 */
+        }
+        .header .logo-title {
+            color: #818cf8; /* text-indigo-400 */
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            margin-right: 0.5rem; /* mr-2 */
+        }
+        .header .logo-subtitle {
+            color: #9ca3af; /* text-gray-400 */
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 500; /* font-medium */
+        }
+        .header .nav-links {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 1rem;
+            flex-wrap: wrap; /* Allow links to wrap */
         }
-
-        .header-link {
+        .header .nav-links a {
+            color: #d1d5db; /* text-gray-300 */
+            padding: 0.5rem; /* px-2 py-2 */
+            margin-left: 0.5rem; /* space-x-2 */
             text-decoration: none;
-            transition: opacity 0.3s ease; /* Smooth transition for subtle hover effect */
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 500; /* font-medium */
+            border-radius: 0.375rem; /* rounded-md */
+        }
+        .header .nav-links a:hover {
+            color: #ffffff; /* hover:text-white */
+            background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+             .header .nav-links a { margin-left: 1rem; } /* sm:space-x-4 */
         }
 
-        .header-link:hover {
-            opacity: 0.95; /* Very subtle dimming effect on hover */
-        }
 
-        .header-image img {
-            width: 60px; /* Adjusted to align with title and subheader height */
-            height: 60px;
-            object-fit: cover;
+        /* --- Hero Section --- */
+        .hero-gradient {
+             background: linear-gradient(135deg, #4c51bf 0%, #553c9a 100%);
+             color: #ffffff;
         }
-
-        .header-text {
-            text-align: left;
+        .hero-title {
+            color: #ffffff;
+            font-size: 2.25rem; /* text-4xl */
         }
-
-        .header-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #000000; /* Ensure black text */
+        .hero-subtitle {
+            color: #c7d2fe; /* text-indigo-200 */
         }
-
-        .header-subtitle {
-            font-size: 1rem;
-            font-weight: 400;
-            color: #000000; /* Ensure black text */
-        }
-
-        /* Navigation */
-        .nav {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem; /* Consistent spacing between nav items */
-        }
-
-        .nav a {
-            color: #000000;
-            text-decoration: none;
+        
+        /* Teal Zoom Button Style */
+        .teal-zoom-button {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            border: 1px solid transparent;
             font-size: 1rem;
             font-weight: 500;
-            display: inline-flex; /* Ensure icons align properly */
-            align-items: center;
+            border-radius: 0.375rem;
+            color: #1f2937;
+            background-color: #ffffff;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .teal-zoom-button:hover {
+            background-color: #0d9488; /* Matches themes icon color */
+            color: white;
+            transform: scale(1.08);
+        }
+        
+        @media (min-width: 640px) { /* sm breakpoint */
+             .hero-title { font-size: 3rem; } /* sm:text-5xl */
+             .hero-subtitle { font-size: 1.25rem; } /* sm:text-xl */
+        }
+         @media (min-width: 1024px) { /* lg breakpoint */
+             .hero-title { font-size: 3.75rem; } /* lg:text-6xl */
         }
 
-        .nav a:hover {
-            text-decoration: underline; /* Consistent hover effect for all nav items, including icons */
-        }
 
-        .nav-icon {
-            width: 1rem;
-            height: 1rem;
-            fill: #000000; /* Black icons */
-            vertical-align: middle;
+        /* --- About Section Styling --- */
+        .about-section {
+            background-color: #1f2937; /* bg-gray-800 */
+            overflow: hidden;
         }
-
-        /* Line Break */
-        hr {
-            border: 0;
-            border-top: 0.5px solid #d3d3d3; /* Thinner (0.5px) and light gray */
-            margin: 0.5rem 0;
+        
+        .about-heading {
+            color: #818cf8; /* text-indigo-400 */
         }
-
-        /* Content */
-        .content {
-            padding: 2rem 0;
-            flex-grow: 1; /* Grow to push footer to bottom */
+        
+        .about-title {
+            color: #f3f4f6; /* text-gray-100 */
+            font-size: 1.875rem; /* text-3xl */
         }
-
-        .content h2 {
+        
+        .about-subtitle {
+            color: #9ca3af; /* text-gray-400 */
+        }
+        
+        .about-card {
+            background-color: #374151; /* bg-gray-700 */
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .about-card h3 {
             font-size: 1.5rem;
             font-weight: 700;
-            text-align: center;
+            color: #f3f4f6; /* text-gray-100 */
             margin-bottom: 1rem;
         }
-
-        .content p {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            text-align: left;
-        }
-
-        .content ul {
-            list-style-type: disc;
-            padding-left: 1.5rem;
+        
+        .about-card p {
+            color: #d1d5db; /* text-gray-300 */
             margin-bottom: 1rem;
         }
-
-        .content li {
-            font-size: 1rem;
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .about-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Feature list styling */
+        .feature-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .feature-list li {
+            position: relative;
+            padding-left: 1.75rem;
+            margin-bottom: 0.75rem;
+            color: #d1d5db; /* text-gray-300 */
+        }
+        
+        .feature-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0.5rem;
+            color: #818cf8; /* text-indigo-400 */
+            font-weight: bold;
+        }
+        
+        /* FAQ styling */
+        .faq-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: #f3f4f6; /* text-gray-100 */
             margin-bottom: 0.5rem;
         }
+        
+        .faq-answer {
+            color: #d1d5db; /* text-gray-300 */
+        }
+        
+        /* Contact card styling */
+        .contact-card {
+            display: flex;
+            align-items: flex-start;
+            padding: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            flex-shrink: 0;
+            height: 2.5rem;
+            width: 2.5rem;
+            background-color: #5850ec;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+        
+        .contact-icon svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: white;
+        }
+        
+        .contact-info h4 {
+            color: #f3f4f6;
+            margin-bottom: 0.25rem;
+        }
+        
+        .contact-info p, .contact-info a {
+            color: #d1d5db;
+        }
+        
+        .contact-info a {
+            text-decoration: underline;
+            text-decoration-color: #818cf8;
+        }
+        
+        .contact-info a:hover {
+            color: #818cf8;
+        }
 
-        /* Footer */
+        /* --- CTA Section --- */
+        .cta-gradient {
+             background: linear-gradient(to right, #4f46e5, #7c3aed);
+        }
+        .cta-section h2 {
+            color: #ffffff;
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 800; /* font-extrabold */
+        }
+        .cta-section p {
+            color: #c7d2fe; /* text-indigo-100 */
+        }
+        
+        /* Using the same teal-zoom-button style for CTA */
+        .cta-button {
+            margin-top: 2rem; /* mt-8 */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+         @media (min-width: 640px) { /* sm breakpoint */
+            .cta-button {
+                width: auto; /* sm:w-auto */
+            }
+             .cta-section h2 { font-size: 2.25rem; } /* sm:text-4xl */
+         }
+
+        /* --- Footer --- */
         .footer {
-            padding: 2rem 0;
-            /* Removed border-top */
+            background-color: #111827; /* bg-gray-900 */
         }
-
         .footer p {
-            font-size: 0.875rem;
+            color: #6b7280; /* text-gray-500 */
         }
+        .footer .footer-links a {
+             color: #9ca3af; /* text-gray-400 */
+             text-decoration: none;
+             font-size: 0.875rem; /* text-sm */
+             padding: 0.25rem 0.5rem; /* Base padding */
+             border-radius: 0.375rem; /* rounded-md */
+        }
+        .footer .footer-links a:hover {
+             color: #d1d5db; /* hover:text-gray-300 */
+             background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+        }
+         .footer .footer-links {
+            margin-top: 1rem; /* mt-4 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+         }
+        .footer .footer-links > * + * {
+            margin-left: 0.5rem; /* Reduced space for better wrapping */
+        }
+         @media (min-width: 640px) { /* sm breakpoint */
+             .footer .footer-links > * + * { margin-left: 1rem; } /* sm:space-x-4 */
+         }
+
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <a href="index.html" class="header-link">
-                <div class="header-content">
-                    <div class="header-image">
-                        <img src="https://png.pngtree.com/png-vector/20230726/ourmid/pngtree-boy-cartoon-face-template-coloring-page-download-for-free-png-image_6746312.png" alt="Cartoon face">
-                        <!-- If hosted locally: -->
-                        <!-- <img src="/images/cartoon-face.png" alt="Cartoon face"> -->
-                    </div>
-                    <div class="header-text">
-                        <h1 class="header-title uppercase">CODY-LEE.ORG</h1>
-                        <p class="header-subtitle">I was told there'd be sandwiches.</p>
-                    </div>
+
+    <header class="header shadow-md sticky top-0 z-50">
+        <nav class="container">
+            <div class="header-nav">
+                <div class="logo-container">
+                     <span class="logo-title">Tasky</span>
+                     <span class="logo-subtitle">by Cody Lee</span>
                 </div>
-            </a>
-        </div>
+                <div class="nav-links">
+                    <a href="index.html" class="transition">Home</a>
+                    <a href="/tasky/about.html" class="transition">About</a>
+                    <a href="/tasky/privacy.html" class="transition">Privacy</a>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <nav class="nav py-025">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="projects.html">Projects</a>
-        <a href="portfolio.html">Portfolio</a>
-        <a href="tasky">Tasky</a>
-        <a href="contact.html">Contact</a>
-        <a href="https://twitter.com/melvco" target="_blank" rel="noopener noreferrer">
-            <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.878-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z"/>
-            </svg>
-        </a>
-        <a href="https://instagram.com/melvco" target="_blank" rel="noopener noreferrer">
-            <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-            </svg>
-        </a>
-    </nav>
-
-    <hr>
-
-    <section class="content">
-        <div class="container">
-            <h2>About this website</h2>
-            <p>
-                Cody-lee.org was designed, written, and produced by Cody Lee.
+    <section class="hero-gradient pt-20 pb-24">
+        <div class="container text-center">
+            <h1 class="hero-title font-extrabold leading-tight mb-4">
+                About Tasky
+            </h1>
+            <p class="text-lg sm:text-xl hero-subtitle max-w-2xl mx-auto mb-8">
+                Welcome to Tasky, a simple Chrome extension designed to help remote workers, WFH employees, and really anyone looking to track and improve their productivity.
             </p>
-            <ul>
-                <li>Visual Studio Code</li>
-                <li>Koder (for mobile)</li>
-                <li>IFTTT</li>
-                <li>GitHub</li>
-                <li>Hover</li>
-            </ul>
+        </div>
+    </section>
+
+    <section class="about-section py-16 sm:py-24">
+        <div class="container">
+            <div class="text-center mb-16">
+                <h2 class="text-base font-semibold about-heading tracking-wide uppercase">Our Story</h2>
+                <p class="mt-2 about-title font-extrabold">
+                    Why We Built Tasky
+                </p>
+                <p class="mt-4 text-xl about-subtitle max-w-3xl mx-auto">
+                    I originally built this app to help me increase efficiency at my task-oriented job, but it has enough features and flexibility that anyone can use it for their timer or productivity needs.
+                </p>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>About the Developer</h3>
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                            </svg>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Cody Lee</h4>
+                            <p>Designer & Developer</p>
+                            <p>Twitter: <a href="https://twitter.com/melvco" target="_blank">@melvco</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                            </svg>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Contact</h4>
+                            <p>Email: <a href="/cdn-cgi/l/email-protection#0c6e79617f636a787b6d7e694c6b616d6560226f6361"><span class="__cf_email__" data-cfemail="d6b4a3bba5b9b0a2a1b7a4b396b1bbb7bfbaf8b5b9bb">[email&#160;protected]</span></a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z" />
+                            </svg>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Current Version</h4>
+                            <p>Tasky v1.2</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-card">
+                    <h3>Key Features</h3>
+                    <ul class="feature-list">
+                        <li>Task timer with single-click or keystroke control</li>
+                        <li>Recent tasks view for at-a-glance productivity tracking</li>
+                        <li>Comprehensive task history with time and date stamps</li>
+                        <li>Task management (delete unwanted tasks, copy daily logs)</li>
+                        <li>Project tagging system to organize tasks by project</li>
+                        <li>Task goals with notification alerts</li>
+                        <li>Timer-only mode for countdown timing</li>
+                        <li>Badge timer for constant visibility in Chrome</li>
+                        <li>Multiple theme options to personalize your experience</li>
+                        <li>Configurable keyboard shortcuts</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="about-card mt-8">
+                <h3>Frequently Asked Questions</h3>
+                
+                <div class="faq-item">
+                    <p class="faq-question">Can I see tasks from previous days?</p>
+                    <p class="faq-answer">Yes! Just hit the button labeled 'Back' or 'Forward' while on the History page to cycle between days.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <p class="faq-question">What if I can't see the timer on my Chrome extension badge?</p>
+                    <p class="faq-answer">Easy fix! Check that the setting is enabled in Tasky - Settings > Timer > Show Timer on Badge, and that you have pinned Tasky in Chrome's extension settings.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <p class="faq-question">Are there any plans to add more tracking data like average task time per day?</p>
+                    <p class="faq-answer">Absolutely. I am constantly looking to add new features, and this one is towards the top of my list.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <p class="faq-question">Where do I report a bug or submit a feature request?</p>
+                    <p class="faq-answer">You can email me at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8eecfbe3fde1e8faf9effcebcee9e3efe7e2a0ede1e3">[email&#160;protected]</a>, or contact me on X @melvco. I am extremely interested in receiving bug reports, feature requests, and other feedback.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <p class="faq-question">Is Tasky totally free, or are some features exclusive to a more premium version?</p>
+                    <p class="faq-answer">As of this FAQ update, Tasky is 100% free. I would like to implement a premium version at some point, but the features there would have to add considerable value.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <p class="faq-question">How do I set up keyboard shortcuts?</p>
+                    <p class="faq-answer">Click the Extensions button in Chrome's toolbar (the puzzle piece to the right of the search bar), and then click the 3-dots menu next to Tasky > Manage Extension > Keyboard Shortcuts. You can set a shortcut to either activate the popup menu or toggle the timer off/on.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-gradient">
+        <div class="max-w-2xl mx-auto text-center py-16 px-4 sm:py-20 sm:px-6 lg:px-8 cta-section">
+            <h2 class="font-extrabold">
+                <span class="block">Ready to boost your productivity?</span>
+            </h2>
+            <p class="mt-4 text-lg leading-6">
+                Install Tasky today and experience effortless time and task management in Chrome.
+            </p>
+            <a href="https://chromewebstore.google.com/detail/tasky/amaoffogbjhfmikgijpbjmlikboabcde?" target="_blank" rel="noopener noreferrer"
+               class="teal-zoom-button cta-button">
+                Add Tasky to Chrome - It's Free!
+            </a>
         </div>
     </section>
 
     <footer class="footer">
-        <div class="container text-center">
-            <nav class="nav py-4">
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="projects.html">Projects</a>
-                <a href="portfolio.html">Portfolio</a>
-                <a href="tasky">Tasky</a>
-                <a href="contact.html">Contact</a>
-            </nav>
-            <p>© 2025 cody-lee.org. All rights reserved.</p>
+        <div class="container py-8 overflow-hidden">
+            <p class="text-center text-base">&copy; 2025 Tasky by Cody Lee. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="index.html" class="transition">Home</a>
+                <a href="/tasky/about.html" class="transition">About</a>
+                <a href="/tasky/privacy.html" class="transition">Privacy</a>
+            </div>
         </div>
     </footer>
-</body>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
 </html>
