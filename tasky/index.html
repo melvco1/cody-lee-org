@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasky - Effortless Task & Time Management (Dark Mode)</title>
+    <style>
+        /* --- Basic Reset & Body Styles --- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; /* San Francisco with fallbacks */
+            background-color: #111827; /* bg-gray-900 */
+            color: #d1d5db; /* text-gray-300 default */
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Utility Classes (Simplified) --- */
+        .container {
+            max-width: 64rem; /* max-w-6xl */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;  /* px-4 */
+            padding-right: 1rem; /* px-4 */
+        }
+        @media (min-width: 640px) { .container { padding-left: 1.5rem; padding-right: 1.5rem; } }
+        @media (min-width: 1024px) { .container { padding-left: 2rem; padding-right: 2rem; } }
+
+        .text-center { text-align: center; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mb-16 { margin-bottom: 4rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mt-6 { margin-top: 1.5rem; }
+        .mt-8 { margin-top: 2rem; }
+        .mt-10 { margin-top: 2.5rem; }
+        .mr-2 { margin-right: 0.5rem; }
+        .ml-3 { margin-left: 0.75rem; }
+        .ml-4 { margin-left: 1rem; }
+        .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+        .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+        .pt-20 { padding-top: 5rem; }
+        .pb-24 { padding-bottom: 6rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .px-8 { padding-left: 2rem; padding-right: 2rem; }
+        .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .rounded-md { border-radius: 0.375rem; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .rounded-xl { border-radius: 0.75rem; }
+        .sticky { position: sticky; }
+        .top-0 { top: 0; }
+        .z-50 { z-index: 50; }
+        .overflow-hidden { overflow: hidden; }
+        .block { display: block; }
+        .inline-block { display: inline-block; }
+        .inline-flex { display: inline-flex; }
+        .flex { display: flex; }
+        .flex-wrap { flex-wrap: wrap; }
+        .items-center { align-items: center; }
+        .items-start { align-items: flex-start; }
+        .items-baseline { align-items: baseline; }
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .flex-shrink-0 { flex-shrink: 0; }
+        .space-x-4 > * + * { margin-left: 1rem; }
+        .space-y-4 > * + * { margin-top: 1rem; }
+        .space-y-8 > * + * { margin-top: 2rem; }
+        .relative { position: relative; }
+        .uppercase { text-transform: uppercase; }
+        .tracking-wide { letter-spacing: 0.05em; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+        .font-extrabold { font-weight: 800; }
+        .text-sm { font-size: 0.875rem; }
+        .text-base { font-size: 1rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .text-3xl { font-size: 1.875rem; }
+        .text-4xl { font-size: 2.25rem; }
+        .leading-tight { line-height: 1.25; }
+        .max-w-2xl { max-width: 42rem; }
+        .max-w-3xl { max-width: 48rem; }
+        .max-w-4xl { max-width: 56rem; }
+        .max-w-6xl { max-width: 72rem; }
+        .transition { transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+
+        /* --- Header --- */
+        .header {
+            background-color: #1f2937; /* bg-gray-800 */
+        }
+        .header .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 4rem; /* h-16 */
+            flex-wrap: wrap; /* Allow wrapping */
+        }
+        .header .logo-container {
+            display: flex;
+            align-items: baseline;
+            flex-shrink: 0;
+            margin-right: 1rem; /* mr-4 */
+        }
+        .header .logo-title {
+            color: #818cf8; /* text-indigo-400 */
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            margin-right: 0.5rem; /* mr-2 */
+        }
+        .header .logo-subtitle {
+            color: #9ca3af; /* text-gray-400 */
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 500; /* font-medium */
+        }
+        .header .nav-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap; /* Allow links to wrap */
+        }
+        .header .nav-links a {
+            color: #d1d5db; /* text-gray-300 */
+            padding: 0.5rem; /* px-2 py-2 */
+            margin-left: 0.5rem; /* space-x-2 */
+            text-decoration: none;
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 500; /* font-medium */
+            border-radius: 0.375rem; /* rounded-md */
+        }
+        .header .nav-links a:hover {
+            color: #ffffff; /* hover:text-white */
+            background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+             .header .nav-links a { margin-left: 1rem; } /* sm:space-x-4 */
+        }
+
+        /* --- Hero Section --- */
+        .hero-gradient {
+             background: linear-gradient(135deg, #4c51bf 0%, #553c9a 100%);
+             color: #ffffff;
+        }
+        .hero-title {
+            color: #ffffff;
+            font-size: 2.25rem; /* text-4xl */
+        }
+        .hero-subtitle {
+            color: #c7d2fe; /* text-indigo-200 */
+        }
+        
+        /* Teal Zoom Button Style */
+        .teal-zoom-button {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            border: 1px solid transparent;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 0.375rem;
+            color: #1f2937;
+            background-color: #ffffff;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .teal-zoom-button:hover {
+            background-color: #0d9488; /* Matches themes icon color */
+            color: white;
+            transform: scale(1.08);
+        }
+        
+        @media (min-width: 640px) { /* sm breakpoint */
+             .hero-title { font-size: 3rem; } /* sm:text-5xl */
+             .hero-subtitle { font-size: 1.25rem; } /* sm:text-xl */
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+             .hero-title { font-size: 3.75rem; } /* lg:text-6xl */
+        }
+
+        /* --- Features Section --- */
+        .features-section {
+            background-color: #1f2937; /* bg-gray-800 */
+            overflow: hidden;
+        }
+        .features-section .feature-heading {
+            color: #818cf8; /* text-indigo-400 */
+        }
+        .features-section .feature-title {
+            color: #f3f4f6; /* text-gray-100 */
+            font-size: 1.875rem; /* text-3xl */
+        }
+        .features-section .feature-subtitle {
+            color: #9ca3af; /* text-gray-400 */
+        }
+        
+        .feature-block {
+            margin-bottom: 4rem; /* mb-16 */
+        }
+        
+        .feature-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-image-container {
+            margin-bottom: 2rem;
+        }
+        
+        .feature-text-wrapper {
+            padding: 0 1rem;
+        }
+        
+        .feature-icon {
+            flex-shrink: 0;
+            height: 2.5rem;
+            width: 2.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-icon svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+        
+        .icon-bg-popup { background-color: #2563eb; }
+        .icon-bg-themes { background-color: #0d9488; }
+        .icon-bg-history { background-color: #db2777; }
+
+        .feature-text-content h2 {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 800; /* font-extrabold */
+            letter-spacing: -0.025em; /* tracking-tight */
+            color: #f3f4f6; /* text-gray-100 */
+        }
+        
+        .feature-text-content p {
+            color: #d1d5db; /* text-gray-300 */
+        }
+        
+        .feature-text-content dl dd {
+            color: #9ca3af; /* text-gray-400 */
+        }
+        
+        .feature-text-content dl svg {
+            color: #818cf8; /* text-indigo-400 */
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+        
+        .feature-image-container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* shadow-xl */
+            border: 1px solid rgba(0,0,0,0.2);
+        }
+        
+        @media (min-width: 1024px) {
+            .feature-container {
+                flex-direction: row;
+                align-items: center;
+                gap: 3rem;
+            }
+            
+            .feature-image-container {
+                flex: 1;
+                margin-bottom: 0;
+            }
+            
+            .feature-text-wrapper {
+                flex: 1;
+                padding: 0;
+            }
+            
+            .feature-container:nth-child(even) {
+                flex-direction: row-reverse;
+            }
+        }
+
+        /* --- CTA Section --- */
+        .cta-gradient {
+             background: linear-gradient(to right, #4f46e5, #7c3aed);
+        }
+        .cta-section h2 {
+            color: #ffffff;
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 800; /* font-extrabold */
+        }
+        .cta-section p {
+            color: #c7d2fe; /* text-indigo-100 */
+        }
+        
+        .cta-button {
+            margin-top: 2rem; /* mt-8 */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @media (min-width: 640px) { /* sm breakpoint */
+            .cta-button {
+                width: auto; /* sm:w-auto */
+            }
+            .cta-section h2 { font-size: 2.25rem; } /* sm:text-4xl */
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: #111827; /* bg-gray-900 */
+        }
+        .footer p {
+            color: #6b7280; /* text-gray-500 */
+        }
+        .footer .footer-links a {
+             color: #9ca3af; /* text-gray-400 */
+             text-decoration: none;
+             font-size: 0.875rem; /* text-sm */
+             padding: 0.25rem 0.5rem; /* Base padding */
+             border-radius: 0.375rem; /* rounded-md */
+        }
+        .footer .footer-links a:hover {
+             color: #d1d5db; /* hover:text-gray-300 */
+             background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+        }
+        .footer .footer-links {
+            margin-top: 1rem; /* mt-4 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .footer .footer-links > * + * {
+            margin-left: 0.5rem; /* Reduced space for better wrapping */
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+             .footer .footer-links > * + * { margin-left: 1rem; } /* sm:space-x-4 */
+        }
+    </style>
+</head>
+<body>
+    <header class="header shadow-md sticky top-0 z-50">
+        <nav class="container">
+            <div class="header-nav">
+                <div class="logo-container">
+                     <span class="logo-title">Tasky</span>
+                     <span class="logo-subtitle">by Cody Lee</span>
+                </div>
+                <div class="nav-links">
+                    <a href="/" class="transition">Home</a>
+                    <a href="/tasky/about.html" class="transition">About</a>
+                    <a href="/tasky/privacy.html" class="transition">Privacy</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero-gradient pt-20 pb-24">
+        <div class="container text-center">
+            <h1 class="hero-title font-extrabold leading-tight mb-4">
+                Take your productivity to the next level with Tasky
+            </h1>
+            <p class="text-lg sm:text-xl hero-subtitle max-w-2xl mx-auto mb-8">
+                Effortlessly track time and manage tasks directly within your Chrome browser. Stay focused and organized.
+            </p>
+            <a href="https://chromewebstore.google.com/detail/tasky/amaoffogbjhfmikgijpbjmlikboabcde?" target="_blank" rel="noopener noreferrer"
+               class="teal-zoom-button shadow-lg">
+                Get Tasky
+            </a>
+        </div>
+    </section>
+
+    <section id="features" class="features-section py-16 sm:py-24">
+        <div class="container">
+            <div class="text-center mb-16">
+                <h2 class="text-base font-semibold feature-heading tracking-wide uppercase">Features</h2>
+                <p class="mt-2 feature-title font-extrabold">
+                    Everything You Need, Right Where You Need It
+                </p>
+                <p class="mt-4 text-xl feature-subtitle max-w-3xl mx-auto">
+                    Tasky integrates seamlessly into your browser for ultimate convenience.
+                </p>
+            </div>
+
+            <!-- Feature 1: Pop-up -->
+            <div class="feature-container">
+                <div class="feature-image-container">
+                    <img src="/tasky/Image 526.jpg" alt="Tasky Quick Access Popup"
+                         onerror="this.onerror=null; this.src='https://placehold.co/600x450/4a5568/e2e8f0?text=Tasky+Popup';">
+                </div>
+                <div class="feature-text-wrapper">
+                    <div class="feature-text-content">
+                        <div>
+                            <span class="feature-icon icon-bg-popup">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="mt-6">
+                            <h2>Instant Access Popup</h2>
+                            <p class="mt-4 text-lg">
+                                No need to switch tabs. Access your timer and task list instantly from the browser toolbar popup, keeping you focused on your current work.
+                            </p>
+                            <dl class="mt-6 space-y-4">
+                                <div class="flex items-start">
+                                    <dt class="flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                    </dt>
+                                    <dd class="ml-3 text-base"><strong>Integrated Timer:</strong> Start, stop, and track time effortlessly.</dd>
+                                </div>
+                                <div class="flex items-start">
+                                    <dt class="flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12M8.25 17.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                                        </svg>
+                                    </dt>
+                                    <dd class="ml-3 text-base"><strong>Simple Task Logging:</strong> Quickly note down tasks or events.</dd>
+                                </div>
+                                <div class="flex items-start">
+                                    <dt class="flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" />
+                                        </svg>
+                                    </dt>
+                                    <dd class="ml-3 text-base"><strong>Always Available:</strong> Access from any tab without interrupting your flow.</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 2: Themes -->
+            <div class="feature-container">
+                <div class="feature-image-container">
+                    <img src="/tasky/Image 531.png" alt="Tasky Customizable Themes"
+                         onerror="this.onerror=null; this.src='https://placehold.co/600x450/1f2937/9ca3af?text=Tasky+Themes+Screenshot';">
+                </div>
+                <div class="feature-text-wrapper">
+                    <div class="feature-text-content">
+                        <div>
+                            <span class="feature-icon icon-bg-themes">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="mt-6">
+                            <h2>Customizable Themes</h2>
+                            <p class="mt-4 text-lg">
+                                Make Tasky your own! Choose from various themes to match your style or browser setup, ensuring a comfortable viewing experience day or night.
+                            </p>
+                            <dl class="mt-6 space-y-4">
+                                <div class="flex items-start">
+                                    <dt class="flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+                                        </svg>
+                                    </dt>
+                                    <dd class="ml-3 text-base"><strong>Light & Dark Modes:</strong> Switch easily between light and dark themes.</dd>
+                                </div>
+                                <div class="flex items-start">
+                                    <dt class="flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.098 19.902a3.75 3.75 0 0 0 5.304 0l6.401-6.402M6.75 21A3.75 3.75 0 0 1 3 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v1.5M6.75 21a3.75 3.75 0 0 0 3.75-3.75V8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.625M6.75 21L17.25 3" />
+                                        </svg>
+                                    </dt>
+                                    <dd class="ml-3 text-base"><strong>Color Options:</strong> Choose accent colors to personalize your view.</dd>
+                                </div>
+                                <div class="flex items-start">
+                                    <dt class="flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+                                        </svg>
+                                    </dt>
+                                    <dd class="ml-3 text-base"><strong>Clean & Minimal:</strong> Focus on your tasks with a clutter-free interface.</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 3: History -->
+            <div class="feature-container">
+                <div class="feature-image-container">
+                    <img src="/tasky/Image 530.png" alt="Tasky Logging History"
+                         onerror="this.onerror=null; this.src='https://placehold.co/600x450/4a5568/e2e8f0?text=Tasky+History';">
+                </div>
+                <div class="feature-text-wrapper">
+                    <div class="feature-text-content">
+                        <div>
+                            <span class="feature-icon icon-bg-history">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="mt-6">
+                            <h2>Extensive Logging & History</h2>
+                            <p class="mt-4 text-lg">
+                                Keep a detailed record of your activities. Review past tasks, timestamps, and timer sessions in the comprehensive history view to understand where your time goes.
+                            </p>
+                            <dl class="mt-6 space-y-4">
+                                <div class="flex items-start">
+                                    <dt class="flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5 4.5V18m-4.5-1.5h16.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                    </dt>
+                                    <dd class="ml-3 text-base"><strong>Review Daily Activity:</strong> See all logged tasks grouped by date.</dd>
+                                </div>
+                                <div class="flex items-start">
+                                    <dt class="flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m9.75 11.375c.621 0 1.125-.504 1.125-1.125v-9.25a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 0-1.125 1.125v3.5m-6.375 0V11.25m-2.625-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Z" />
+                                        </svg>
+                                    </dt>
+                                    <dd class="ml-3 text-base"><strong>Copy Logs:</strong> Easily copy daily logs for reporting or sharing.</dd>
+                                </div>
+                                <div class="flex items-start">
+                                    <dt class="flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5V15Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5V15Zm0 2.25h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5v-.008Z" />
+                                        </svg>
+                                    </dt>
+                                    <dd class="ml-3 text-base"><strong>Detailed View:</strong> See exact times and dates for every entry.</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-gradient">
+        <div class="max-w-2xl mx-auto text-center py-16 px-4 sm:py-20 sm:px-6 lg:px-8 cta-section">
+            <h2 class="font-extrabold">
+                <span class="block">Ready to boost your productivity?</span>
+            </h2>
+            <p class="mt-4 text-lg leading-6">
+                Install Tasky today and experience effortless time and task management in Chrome.
+            </p>
+            <a href="https://chromewebstore.google.com/detail/tasky/amaoffogbjhfmikgijpbjmlikboabcde?" target="_blank" rel="noopener noreferrer"
+               class="teal-zoom-button cta-button">
+                Add Tasky to Chrome - It's Free!
+            </a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container py-8 overflow-hidden">
+            <p class="text-center text-base">© 2025 Tasky by Cody Lee. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="/" class="transition">Home</a>
+                <a href="/tasky/about.html" class="transition">About</a>
+                <a href="/tasky/privacy.html" class="transition">Privacy</a>
+            </div>
+        </div>
+    </footer>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93d7450d1f99b025',t:'MTc0Njg1NzM4Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
+</html>

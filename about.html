@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | cody-lee.org</title>
+    <style>
+        /* Basic Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; /* San Francisco */
+            background-color: #ffffff; /* White background */
+            color: #000000; /* Black text */
+            line-height: 1.6;
+            min-height: 100vh; /* Ensure full viewport height */
+            display: flex;
+            flex-direction: column; /* Stack content vertically */
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: min(600px, 90%); /* Responsive max-width with percentage fallback */
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .uppercase { text-transform: uppercase; }
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mt-8 { margin-top: 2rem; }
+        .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+        .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+        .py-025 { padding-top: 0.25rem; padding-bottom: 0.25rem; } /* Reduced padding for nav bar */
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-4 { gap: 1rem; }
+
+        /* Header */
+        .header {
+            padding: 1rem 0 0.5rem 0; /* Reduced top padding from 2rem to 1rem, bottom from 1rem to 0.5rem */
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .header-link {
+            text-decoration: none;
+            transition: opacity 0.3s ease; /* Smooth transition for subtle hover effect */
+        }
+
+        .header-link:hover {
+            opacity: 0.95; /* Very subtle dimming effect on hover */
+        }
+
+        .header-image img {
+            width: 60px; /* Adjusted to align with title and subheader height */
+            height: 60px;
+            object-fit: cover;
+        }
+
+        .header-text {
+            text-align: left;
+        }
+
+        .header-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #000000; /* Ensure black text */
+        }
+
+        .header-subtitle {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #000000; /* Ensure black text */
+        }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem; /* Consistent spacing between nav items */
+        }
+
+        .nav a {
+            color: #000000;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            display: inline-flex; /* Ensure icons align properly */
+            align-items: center;
+        }
+
+        .nav a:hover {
+            text-decoration: underline; /* Consistent hover effect for all nav items, including icons */
+        }
+
+        .nav-icon {
+            width: 1rem;
+            height: 1rem;
+            fill: #000000; /* Black icons */
+            vertical-align: middle;
+        }
+
+        /* Line Break */
+        hr {
+            border: 0;
+            border-top: 0.5px solid #d3d3d3; /* Thinner (0.5px) and light gray */
+            margin: 0.5rem 0;
+        }
+
+        /* Content */
+        .content {
+            padding: 2rem 0;
+            flex-grow: 1; /* Grow to push footer to bottom */
+        }
+
+        .content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .content p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .content ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .content li {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 2rem 0;
+            /* Removed border-top */
+        }
+
+        .footer p {
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="header-link">
+                <div class="header-content">
+                    <div class="header-image">
+                        <img src="codylee.png" alt="melvco face drawing">
+                        <!-- If hosted locally: -->
+                        <!-- <img src="/images/cartoon-face.png" alt="Cartoon face"> -->
+                    </div>
+                    <div class="header-text">
+                        <h1 class="header-title uppercase">CODY-LEE.ORG</h1>
+                        <p class="header-subtitle">I was told there'd be sandwiches.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </header>
+
+    <nav class="nav py-025">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="tasky">Tasky</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://twitter.com/melvco" target="_blank" rel="noopener noreferrer">
+            <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.878-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z"/>
+            </svg>
+        </a>
+        <a href="https://instagram.com/melvco" target="_blank" rel="noopener noreferrer">
+            <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+        </a>
+    </nav>
+
+    <hr>
+
+    <section class="content">
+        <div class="container">
+            <h2>About this website</h2>
+            <p>
+                Cody-lee.org was designed, written, and produced by Cody Lee.
+            </p>
+            <ul>
+                <li>Visual Studio Code</li>
+                <li>Koder (for mobile)</li>
+                <li>IFTTT</li>
+                <li>GitHub</li>
+                <li>Hover</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="nav py-4">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="portfolio.html">Portfolio</a>
+                <a href="tasky">Tasky</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <p>© 2025 cody-lee.org. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
