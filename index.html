@@ -74,8 +74,9 @@
             .text-4xl { font-size: 3.75rem; }
         }
         @media (max-width: 600px) {
-            meta[name="viewport"] {
-                content: "width=device-width, initial-scale=0.5, maximum-scale=0.5";
+            body {
+                transform: scale(0.6);
+                transform-origin: top center;
             }
         }
 
@@ -132,8 +133,6 @@
             display: flex;
             justify-content: center;
             gap: 1.5rem;
-            max-width: 500px; /* Constrain to match narrow header image */
-            margin: 0 auto; /* Center the navbar */
         }
 
         .nav a {
@@ -166,7 +165,7 @@
         /* CTA Section */
         .cta-gradient {
             background: linear-gradient(135deg, #4c51bf 0%, #553c9a 100%);
-            width: 100%; /* Full screen width */
+            width: 100vw; /* Full viewport width */
         }
 
         .cta-section {
