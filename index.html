@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>cody-lee.org</title>
     <style>
         /* Basic Reset */
@@ -73,6 +73,11 @@
             .text-6xl { font-size: 5rem; }
             .text-4xl { font-size: 3.75rem; }
         }
+        @media (max-width: 600px) {
+            meta[name="viewport"] {
+                content: "width=device-width, initial-scale=0.7, maximum-scale=0.7";
+            }
+        }
 
         /* Spacer for White Space */
         .spacer {
@@ -127,7 +132,6 @@
             display: flex;
             justify-content: center;
             gap: 1.5rem;
-            flex-wrap: wrap; /* Ensures links wrap on narrow screens */
             max-width: 600px; /* Constrain to match narrow header image */
             margin: 0 auto; /* Center the navbar */
         }
