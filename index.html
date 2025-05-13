@@ -166,7 +166,10 @@
         .cta-gradient {
             background: linear-gradient(135deg, #4c51bf 0%, #553c9a 100%);
             width: 100vw; /* Full viewport width */
-            margin: 0; /* Remove any margins */
+            margin: 0; /* Remove margins */
+            position: relative; /* Ensure edge-to-edge */
+            left: 0;
+            right: 0;
         }
 
         .cta-section {
@@ -225,6 +228,9 @@
 
         /* Content Section */
         .content {
+            margin: 0;
+            padding: 0;
+            width: 100%;
             flex-grow: 1;
         }
 
