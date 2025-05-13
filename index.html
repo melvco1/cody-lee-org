@@ -24,6 +24,9 @@
             min-height: 100vh; /* Ensure full viewport height */
             display: flex;
             flex-direction: column; /* Stack content vertically */
+            margin: 0; /* Remove body margins */
+            padding: 0; /* Remove body padding */
+            width: 100%; /* Full width */
             overflow-x: hidden; /* Prevent horizontal scrollbars */
         }
 
@@ -166,9 +169,10 @@
         /* CTA Section */
         .cta-gradient {
             background: linear-gradient(135deg, #4c51bf 0%, #553c9a 100%);
-            width: calc(100% + 2rem); /* Extend beyond parent constraints */
-            margin-left: -1rem; /* Offset to align with edges */
-            margin-right: -1rem; /* Offset to align with edges */
+            width: 100vw; /* Full viewport width */
+            margin: 0; /* Remove margins */
+            padding: 0; /* Remove padding */
+            box-sizing: border-box; /* Include padding/borders */
         }
 
         .cta-section {
@@ -177,6 +181,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            max-width: min(1200px, 90%); /* Keep content centered */
+            margin: 0 auto;
         }
 
         .cta-section h2 {
