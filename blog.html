@@ -323,7 +323,7 @@
                             <h2 class="article-header">${title}</h2>
                             <div class="article-author">
                                 <img src="codylee.png" alt="Cody Lee avatar">
-                                <span>Cody Lee • ${new Date(fileResponse.headers.get('last-modified')).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                                <span>Cody Lee • ${new Date(file.commit.author.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                             </div>
                             <div class="article-content">${html}</div>
                         `;
