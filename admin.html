@@ -103,9 +103,14 @@
             document.getElementById('previewModal').style.display = 'none';
         }
 
-        // Update the hidden body content before form submission
-        document.getElementById('blogPostForm').addEventListener('submit', function() {
-            document.getElementById('bodyContent').value = quill.root.innerHTML;
+        // Ensure the body content is set before form submission
+        document.getElementById('blogPostForm').addEventListener('submit', function(event) {
+            const bodyContent = document.getElementById('bodyContent');
+            bodyContent.value = quill.root.innerHTML;
+            if (!document.getElementById('title').value || !bodyContent.value) {
+                event.preventDefault();
+                alert('Please provide both a title and body content.');
+            }
         });
     </script>
 </body>
