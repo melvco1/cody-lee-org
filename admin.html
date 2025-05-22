@@ -62,7 +62,7 @@
                 </div>
             </div>
         </div>
-        <form id="blogPostForm" class="space-y-4" onsubmit="publishPost(event)">
+        <form id="blogPostForm" class="space-y-4" action="/admin" method="POST">
             <button type="submit" class="w-full py-3 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 flex items-center justify-center">
                 <i class="fas fa-paper-plane mr-2"></i>Publish Post
             </button>
@@ -103,10 +103,10 @@
             document.getElementById('previewModal').style.display = 'none';
         }
 
-        async function publishPost(event) {
-            event.preventDefault();
-            alert('Post submission temporarily disabled for security.');
-        }
+        // Update the hidden body content before form submission
+        document.getElementById('blogPostForm').addEventListener('submit', function() {
+            document.getElementById('bodyContent').value = quill.root.innerHTML;
+        });
     </script>
 </body>
 </html>
