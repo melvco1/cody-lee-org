@@ -1,4 +1,4 @@
-export async function onRequestPost({ request }) {
+export async function onRequestPost({ request, env }) {
     try {
         const formData = await request.formData();
         const title = formData.get('title');
@@ -16,13 +16,14 @@ export async function onRequestPost({ request }) {
         const encodedContent = btoa(unescape(encodeURIComponent(content)));
         console.log('Content prepared:', { slug, contentLength: content.length });
 
-        const token = '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';
+        const token = env.GITHUB_TOKEN || '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';
         const response = await fetch(`https://api.github.com/repos/melvco1/cody-lee-org/contents/posts/${slug}.md`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
-                'Accept': 'application/vnd.github.v3+json'
+                'Accept': 'application/vnd.github.v3+json',
+                'User-Agent': 'Cloudflare-Pages-Function'
             },
             body: JSON.stringify({
                 message: `Add post: ${title}`,
