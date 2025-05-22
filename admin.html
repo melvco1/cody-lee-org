@@ -103,11 +103,14 @@
             document.getElementById('previewModal').style.display = 'none';
         }
 
-        // Ensure the body content is set before form submission
         document.getElementById('blogPostForm').addEventListener('submit', function(event) {
+            const title = document.getElementById('title').value;
             const bodyContent = document.getElementById('bodyContent');
             bodyContent.value = quill.root.innerHTML;
-            if (!document.getElementById('title').value || !bodyContent.value) {
+            const tags = document.getElementById('tags').value;
+            console.log('Form data before submission:', { title, body: bodyContent.value, tags });
+
+            if (!title || !bodyContent.value) {
                 event.preventDefault();
                 alert('Please provide both a title and body content.');
             }
