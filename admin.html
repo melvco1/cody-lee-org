@@ -48,8 +48,8 @@
             </div>
             <div id="editor" class="ql-editor text-gray-800"></div>
             <input type="hidden" id="bodyContent" name="body">
-            <button onclick="showPreview()" class="mt-4 py-2 px-4 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 flex items-center">
-                <i class="fas fa-eye mr-2"></i>Preview
+            <button onclick="generatePostJSON()" class="mt-4 py-2 px-4 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 flex items-center">
+                <i class="fas fa-eye mr-2"></i>Generate JSON
             </button>
         </div>
         <!-- Settings Section -->
@@ -62,11 +62,16 @@
                 </div>
             </div>
         </div>
-        <form id="blogPostForm" class="space-y-4">
-            <button type="submit" onclick="submitForm(event)" class="w-full py-3 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 flex items-center justify-center">
-                <i class="fas fa-paper-plane mr-2"></i>Publish Post
-            </button>
-        </form>
+        <div class="bg-white shadow-lg rounded-lg p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Publish Instructions</h2>
+            <p class="text-gray-700">
+                Use the form above to write your post, then click "Generate JSON" to create a JSON snippet for your post. Copy the JSON output, add it to <code>posts.json</code> in your GitHub repository, commit, and push the changes to trigger a deployment to Cloudflare Pages. The post will then appear on the blog page.
+            </p>
+            <p class="text-gray-700 mt-2">
+                Generated JSON will appear below:
+            </p>
+            <pre id="jsonOutput" style="background: #f4f4f4; padding: 1rem; border-radius: 0.5rem; min-height: 100px;"></pre>
+        </div>
     </div>
     <!-- Preview Modal -->
     <div id="previewModal" class="modal">
@@ -103,75 +108,31 @@
             document.getElementById('previewModal').style.display = 'none';
         }
 
-        async function submitForm(event) {
-            event.preventDefault();
+        function generatePostJSON() {
             const title = document.getElementById('title').value;
             let bodyContent = quill.root.innerHTML;
             const tags = document.getElementById('tags').value;
-            console.log('Form data before submission:', { title, body: bodyContent, tags });
 
             if (!title || !bodyContent) {
                 alert('Please provide both a title and body content.');
                 return;
             }
 
-            // Sanitize body content by removing HTML tags and escaping special characters
+            // Sanitize body content for JSON
             bodyContent = bodyContent
                 .replace(/<[^>]+>/g, '') // Remove HTML tags
                 .replace(/\n/g, '\\n')   // Escape newlines
                 .replace(/"/g, '\\"');   // Escape double quotes
 
             const slug = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-            const content = `# ${title}\n\n${bodyContent}${tags ? '\n\n**Tags:** ' + tags : ''}`;
+            const content = `# ${title}\\n\\n${bodyContent}${tags ? '\\n\\n**Tags:** ' + tags : ''}`;
             const timestamp = new Date().toISOString();
             const post = { title, body: bodyContent, tags, content, slug, timestamp };
 
-            try {
-                // Fetch the current posts.json file
-                const getResponse = await fetch('https://api.github.com/repos/melvco1/cody-lee-org/contents/posts.json', {
-                    headers: {
-                        'Authorization': 'Bearer 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_',
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
-                });
-                if (!getResponse.ok) {
-                    const errorText = await getResponse.text();
-                    throw new Error(`Failed to fetch posts.json: ${errorText}`);
-                }
-                const getData = await getResponse.json();
-                const posts = JSON.parse(atob(getData.content));
-                posts.push(post);
-                const updatedContent = btoa(JSON.stringify(posts, null, 2));
-
-                // Update posts.json on GitHub
-                const putResponse = await fetch('https://api.github.com/repos/melvco1/cody-lee-org/contents/posts.json', {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': 'Bearer GITHUB_TOKEN',
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/vnd.github.v3+json'
-                    },
-                    body: JSON.stringify({
-                        message: `Add post: ${title}`,
-                        content: updatedContent,
-                        sha: getData.sha,
-                        branch: 'main'
-                    })
-                });
-
-                if (!putResponse.ok) {
-                    const errorText = await putResponse.text();
-                    throw new Error(`Failed to update posts.json: ${errorText}`);
-                }
-
-                alert('Post published successfully!');
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                alert('Error submitting form: ' + error.message);
-            }
+            // Display the JSON output
+            const jsonOutput = document.getElementById('jsonOutput');
+            jsonOutput.textContent = JSON.stringify(post, null, 2);
         }
-
-        console.log('Admin page loaded, no initial GET request to /admin');
     </script>
 </body>
 </html>
