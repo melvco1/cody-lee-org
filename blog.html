@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Blog - cody-lee.org</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | cody-lee.org</title>
     <style>
         /* Basic Reset */
         *, *::before, *::after {
@@ -44,14 +44,13 @@
         .mt-4 { margin-top: 1rem; }
         .mt-8 { margin-top: 2rem; }
         .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+        .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
         .py-025 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
         .flex { display: flex; }
         .items-center { align-items: center; }
         .justify-center { justify-content: center; }
         .gap-2 { gap: 0.5rem; }
         .gap-4 { gap: 1rem; }
-        .text-4xl { font-size: 2.25rem; }
-        .font-extrabold { font-weight: 800; }
 
         /* Header */
         .header {
@@ -130,70 +129,6 @@
             margin: 0.5rem 0;
         }
 
-        /* Articles */
-        .article {
-            margin-bottom: 3rem;
-        }
-
-        .article-header {
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .article-subheader {
-            font-size: 1.25rem;
-            font-weight: 500;
-            margin-top: 0.5rem;
-            text-align: center;
-        }
-
-        .article-author {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            margin: 0.5rem 0 1rem;
-            font-size: 0.875rem;
-        }
-
-        .article-author img {
-            width: 24px;
-            height: 24px;
-            object-fit: cover;
-        }
-
-        .article-content {
-            margin-top: 1rem;
-            text-align: left;
-        }
-
-        .article-content img {
-            max-width: 100%;
-            height: auto;
-            margin: 1rem 0;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .article-content p {
-            font-size: 1rem;
-        }
-
-        .article-content blockquote {
-            font-style: italic;
-            border-left: 2px solid #000000;
-            padding-left: 1rem;
-            margin: 1rem 0;
-        }
-
-        .article-content h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 1.5rem 0 0.75rem;
-        }
-
         /* Content */
         .content {
             padding: 2rem 0;
@@ -207,6 +142,44 @@
             margin-bottom: 1rem;
         }
 
+        .content p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        /* Blog Post */
+        .blog-post {
+            margin-bottom: 2rem;
+        }
+
+        .blog-post h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-post .author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .blog-post .author img {
+            width: 24px;
+            height: 24px;
+            object-fit: cover;
+        }
+
+        .blog-post .content p {
+            margin-bottom: 1rem;
+        }
+
         /* Footer */
         .footer {
             padding: 2rem 0;
@@ -216,6 +189,7 @@
             font-size: 0.875rem;
         }
 
+        /* Mobile Scaling */
         @media (max-width: 600px) {
             body {
                 transform: scale(0.75);
@@ -223,7 +197,6 @@
             }
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <header class="header">
@@ -231,7 +204,7 @@
             <a href="/index.html" class="header-link">
                 <div class="header-content">
                     <div class="header-image">
-                        <img src="codylee.png" alt="Cody Lee avatar">
+                        <img src="codylee.png" alt="melvco face drawing">
                     </div>
                     <div class="header-text">
                         <h1 class="header-title uppercase">CODY-LEE.ORG</h1>
@@ -256,19 +229,17 @@
         </a>
         <a href="https://instagram.com/melvco" target="_blank" rel="noopener noreferrer">
             <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.90-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
             </svg>
         </a>
     </nav>
 
     <hr>
 
-    <div class="spacer" style="height: 65px;"></div>
-
     <section class="content">
         <div class="container">
-            <h2 class="text-4xl font-extrabold text-center mb-8">Blog</h2>
-            <div id="posts"></div>
+            <h2>Blog</h2>
+            <div id="blog-posts"></div>
         </div>
     </section>
 
@@ -285,59 +256,34 @@
     </footer>
 
     <script>
-        async function loadPosts() {
-            const postsContainer = document.getElementById('posts');
+        async function fetchBlogPosts() {
             try {
-                // Fetch list of files in posts/ folder
-                const response = await fetch('https://api.github.com/repos/melvco1/cody-lee-org/contents/posts', {
-                    headers: {
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
+                const response = await fetch('/admin');
+                const posts = await response.json();
+                const blogPostsDiv = document.getElementById('blog-posts');
+                blogPostsDiv.innerHTML = '';
+
+                posts.forEach(post => {
+                    const postDiv = document.createElement('div');
+                    postDiv.className = 'blog-post';
+                    postDiv.innerHTML = `
+                        <h3>${post.title}</h3>
+                        <div class="author">
+                            <img src="codylee.png" alt="Cody Lee">
+                            <span>Cody Lee</span>
+                        </div>
+                        <div class="content">${post.content}</div>
+                    `;
+                    blogPostsDiv.appendChild(postDiv);
                 });
-                const files = await response.json();
-                if (!Array.isArray(files)) {
-                    throw new Error('Failed to fetch posts');
-                }
-
-                // Sort files by name (newest first, assuming chronological naming)
-                files.sort((a, b) => b.name.localeCompare(a.name));
-
-                // Process each Markdown file
-                for (const file of files) {
-                    if (file.name.endsWith('.md')) {
-                        // Fetch file content
-                        const fileResponse = await fetch(file.download_url);
-                        const markdown = await fileResponse.text();
-
-                        // Extract title (first # heading)
-                        const titleMatch = markdown.match(/^# (.+)$/m);
-                        const title = titleMatch ? titleMatch[1] : file.name.replace('.md', '');
-
-                        // Parse Markdown to HTML
-                        const html = marked.parse(markdown);
-
-                        // Create article element
-                        const article = document.createElement('article');
-                        article.className = 'article';
-                        article.innerHTML = `
-                            <h2 class="article-header">${title}</h2>
-                            <div class="article-author">
-                                <img src="codylee.png" alt="Cody Lee avatar">
-                                <span>Cody Lee</span>
-                            </div>
-                            <div class="article-content">${html}</div>
-                        `;
-                        postsContainer.appendChild(article); 
-                    }
-                }
             } catch (error) {
-                console.error('Error loading posts:', error);
-                postsContainer.innerHTML = '<p>Error loading blog posts. Please try again later.</p>';
+                console.error('Error fetching blog posts:', error);
+                const blogPostsDiv = document.getElementById('blog-posts');
+                blogPostsDiv.innerHTML = '<p>Error loading blog posts.</p>';
             }
         }
 
-        // Load posts when the page loads
-        window.onload = loadPosts;
+        document.addEventListener('DOMContentLoaded', fetchBlogPosts);
     </script>
 </body>
 </html>
