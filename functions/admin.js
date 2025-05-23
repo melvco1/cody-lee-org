@@ -17,7 +17,7 @@ export async function onRequestPost({ request, env }) {
         const encodedContent = btoa(unescape(encodeURIComponent(content)));
         console.log('Content prepared:', { slug, contentLength: content.length });
 
-        const token = env.GITHUB_TOKEN || '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';
+        const token = env.GITHUB_TOKEN || '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';
         console.log('Using token:', token ? 'Token present' : 'Token missing');
 
         const response = await fetch(`https://api.github.com/repos/melvco1/cody-lee-org/contents/posts/${slug}.md`, {
