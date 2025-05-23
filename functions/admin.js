@@ -24,6 +24,11 @@ export async function onRequestPost({ request, env }) {
             timestamp
         };
 
+        if (!env.BLOG_POSTS) {
+            console.error('KV namespace BLOG_POSTS not found');
+            return new Response('Server error: KV namespace not found', { status: 500 });
+        }
+
         await env.BLOG_POSTS.put(`post:${slug}`, JSON.stringify(post));
         console.log('Post saved to KV:', { slug });
 
@@ -36,6 +41,11 @@ export async function onRequestPost({ request, env }) {
 
 export async function onRequestGet({ env }) {
     try {
+        if (!env.BLOG_POSTS) {
+            console.error('KV namespace BLOG_POSTS not found');
+            return new Response('Server error: KV namespace not found', { status: 500 });
+        }
+
         const keys = await env.BLOG_POSTS.list();
         const posts = [];
         for (const key of keys.keys) {
@@ -45,6 +55,7 @@ export async function onRequestGet({ env }) {
             }
         }
         posts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        console.log('Posts fetched from KV:', posts);
         return new Response(JSON.stringify(posts), {
             headers: { 'Content-Type': 'application/json' }
         });
