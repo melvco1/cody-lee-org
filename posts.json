@@ -1,1 +1,10 @@
-[]
+[
+    {
+        "title": "Test Blog Post",
+        "body": "This is a test paragraph.\n\nThis is another paragraph.",
+        "tags": "test, demo",
+        "content": "# Test Blog Post\n\nThis is a test paragraph.\n\nThis is another paragraph.\n\n**Tags:** test, demo",
+        "slug": "test-blog-post",
+        "timestamp": "2025-05-22T23:00:00Z"
+    }
+]
