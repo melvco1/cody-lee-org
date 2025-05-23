@@ -258,7 +258,7 @@
     <script>
         async function fetchBlogPosts() {
             try {
-                const response = await fetch('/admin');
+                const response = await fetch('/posts.json');
                 const posts = await response.json();
                 const blogPostsDiv = document.getElementById('blog-posts');
                 blogPostsDiv.innerHTML = '';

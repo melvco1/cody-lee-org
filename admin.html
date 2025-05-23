@@ -103,7 +103,7 @@
             document.getElementById('previewModal').style.display = 'none';
         }
 
-        function submitForm(event) {
+        async function submitForm(event) {
             event.preventDefault();
             const title = document.getElementById('title').value;
             const bodyContent = quill.root.innerHTML;
@@ -115,30 +115,51 @@
                 return;
             }
 
-            const formData = new FormData();
-            formData.append('title', title);
-            formData.append('body', bodyContent);
-            formData.append('tags', tags);
+            const slug = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+            const content = `# ${title}\n\n${bodyContent}${tags ? '\n\n**Tags:** ' + tags : ''}`;
+            const timestamp = new Date().toISOString();
+            const post = { title, body: bodyContent, tags, content, slug, timestamp };
 
-            console.log('Submitting form data:', Object.fromEntries(formData));
+            try {
+                // Fetch the current posts.json file
+                const getResponse = await fetch('https://api.github.com/repos/melvco1/cody-lee-org/contents/posts.json', {
+                    headers: {
+                        'Authorization': 'Bearer GITHUB_TOKEN',
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+                const getData = await getResponse.json();
+                const posts = JSON.parse(atob(getData.content));
+                posts.push(post);
+                const updatedContent = btoa(JSON.stringify(posts, null, 2));
 
-            fetch('/admin', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                console.log('Response from server:', data);
-                alert(data);
-            })
-            .catch(error => {
+                // Update posts.json on GitHub
+                const putResponse = await fetch('https://api.github.com/repos/melvco1/cody-lee-org/contents/posts.json', {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': 'Bearer GITHUB_TOKEN',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/vnd.github.v3+json'
+                    },
+                    body: JSON.stringify({
+                        message: `Add post: ${title}`,
+                        content: updatedContent,
+                        sha: getData.sha,
+                        branch: 'main'
+                    })
+                });
+
+                if (!putResponse.ok) {
+                    const errorText = await putResponse.text();
+                    throw new Error(errorText);
+                }
+
+                alert('Post published successfully!');
+            } catch (error) {
                 console.error('Error submitting form:', error);
                 alert('Error submitting form: ' + error.message);
-            });
+            }
         }
-
-        // Ensure no GET request is made on page load
-        console.log('Admin page loaded, no initial GET request to /admin');
     </script>
 </body>
 </html>
