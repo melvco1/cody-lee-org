@@ -1,5 +1,6 @@
 export async function onRequestPost({ request, env }) {
     try {
+        console.log('Starting /admin function execution');
         const formData = await request.formData();
         const title = formData.get('title');
         const body = formData.get('body');
@@ -17,6 +18,8 @@ export async function onRequestPost({ request, env }) {
         console.log('Content prepared:', { slug, contentLength: content.length });
 
         const token = env.GITHUB_TOKEN || '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';
+        console.log('Using token:', token ? 'Token present' : 'Token missing');
+
         const response = await fetch(`https://api.github.com/repos/melvco1/cody-lee-org/contents/posts/${slug}.md`, {
             method: 'PUT',
             headers: {
@@ -33,13 +36,14 @@ export async function onRequestPost({ request, env }) {
         });
 
         const responseBody = await response.text();
-        console.log('GitHub API response:', { status: response.status, body: responseBody });
+        console.log('GitHub API response:', { status: response.status, headers: Object.fromEntries(response.headers), body: responseBody });
 
         if (!response.ok) {
             console.error('GitHub API error:', responseBody);
             return new Response('Failed to publish post: ' + responseBody, { status: response.status });
         }
 
+        console.log('Post published successfully');
         return new Response('Post published successfully!', { status: 200 });
     } catch (error) {
         console.error('Function error:', error.message, error.stack);
