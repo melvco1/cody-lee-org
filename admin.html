@@ -62,8 +62,8 @@
                 </div>
             </div>
         </div>
-        <form id="blogPostForm" class="space-y-4" action="/admin" method="POST">
-            <button type="submit" class="w-full py-3 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 flex items-center justify-center">
+        <form id="blogPostForm" class="space-y-4">
+            <button type="submit" onclick="submitForm(event)" class="w-full py-3 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 flex items-center justify-center">
                 <i class="fas fa-paper-plane mr-2"></i>Publish Post
             </button>
         </form>
@@ -103,18 +103,39 @@
             document.getElementById('previewModal').style.display = 'none';
         }
 
-        document.getElementById('blogPostForm').addEventListener('submit', function(event) {
+        function submitForm(event) {
+            event.preventDefault();
             const title = document.getElementById('title').value;
-            const bodyContent = document.getElementById('bodyContent');
-            bodyContent.value = quill.root.innerHTML;
+            const bodyContent = quill.root.innerHTML;
             const tags = document.getElementById('tags').value;
-            console.log('Form data before submission:', { title, body: bodyContent.value, tags });
+            console.log('Form data before submission:', { title, body: bodyContent, tags });
 
-            if (!title || !bodyContent.value) {
-                event.preventDefault();
+            if (!title || !bodyContent) {
                 alert('Please provide both a title and body content.');
+                return;
             }
-        });
+
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('body', bodyContent);
+            formData.append('tags', tags);
+
+            console.log('Submitting form data:', Object.fromEntries(formData));
+
+            fetch('/admin', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Response from server:', data);
+                alert(data);
+            })
+            .catch(error => {
+                console.error('Error submitting form:', error);
+                alert('Error submitting form: ' + error.message);
+            });
+        }
     </script>
 </body>
 </html>
