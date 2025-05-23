@@ -136,6 +136,9 @@
                 alert('Error submitting form: ' + error.message);
             });
         }
+
+        // Ensure no GET request is made on page load
+        console.log('Admin page loaded, no initial GET request to /admin');
     </script>
 </body>
 </html>
