@@ -249,7 +249,7 @@
     <script>
         async function fetchBlogPosts() {
             try {
-                const response = await fetch('blog-post-handler.bumsoftware.workers.dev');
+                const response = await fetch('https://blog-post-handler.bumsoftware.workers.dev');
                 if (!response.ok) {
                     throw new Error('Failed to fetch posts');
                 }
